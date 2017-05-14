@@ -1,0 +1,21 @@
+dim datas(12)
+
+rem 名字
+rem 死亡模式-三人 积分
+rem
+rem
+
+datas(0)="Sam"
+datas(1)=0
+datas(2)=0
+datas(3)=0
+datas(4)="天才教授2"
+datas(5)=0
+datas(6)=0
+datas(7)=0
+datas(8)="白展堂"
+datas(9)=0
+datas(10)=0
+datas(11)=0
+filewritelist(filedirrootexternal & "/caishuzi", "cszdat.txt", "datas")
+msgbox("安装完成！")

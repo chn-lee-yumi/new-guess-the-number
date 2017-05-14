@@ -1,0 +1,41 @@
+REM 过程
+
+Sub button_click(who)
+	
+End Sub 
+
+Sub check_change(who, checked)
+  
+End Sub 
+
+Sub edit_change(who, old, new)
+ 
+End Sub
+
+Sub listview_itemclick(who, pos, value)
+	
+end sub
+
+Sub radio_change(who, checked)
+	
+End Sub 
+
+Sub seekbar_valuechanged(who, value, userchanged)
+
+End Sub
+
+Sub spinner_itemclick(who, pos, value)
+	
+end sub
+
+Sub tabhost_tabchanged(who)
+
+End Sub 
+
+Sub toggle_change(who, checked)
+	
+End Sub 
+
+Sub menu_click(which)
+	
+end sub

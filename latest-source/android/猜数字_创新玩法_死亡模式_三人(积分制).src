@@ -1,0 +1,410 @@
+dim minn
+dim x
+dim maxn
+dim guess
+dim ground
+dim player1
+dim player2
+dim player3
+dim nowp
+rem nowp现在猜数字的玩家，player1/2/3玩家的积分，对应lbla/lblb/lblc
+dim cmin
+dim cmax
+
+rem =====窗体start=====
+col=argb(950,0,400,1000)
+w=windowwidth/8
+h=windowheight/13
+msgbox("窗体宽度" & windowwidth & crlf & "窗体高度" & windowheight & crlf & "w值" & w & crlf & "h值" & h )
+
+Dim color(3)
+color(0) = cgold
+color(1) = cyellow
+color(2) = cgold
+setactivitybackground("TL_BR",0 , "color")
+
+addlabel("lbl1", 1, 1, windowwidth, h, "")
+settext("lbl1", "猜数字-创新玩法-死亡模式-三人 ")
+settextsize("lbl1", 20)
+settextcolor("lbl1", cgreen)
+
+addlabel("lbl3", 1,3*h , windowwidth , h, "")
+settextsize("lbl3", 20)
+settextcolor("lbl3", cblue)
+
+addlabel("lbl4", 1, 4*h, 3*w, h, "")
+settext("lbl4", "数字范围:")
+settextsize("lbl4", 20)
+settextcolor("lbl4", cblack)
+
+addlabel("lbl11", 1, 5*h, 3*w, h, "")
+settext("lbl11", "猜数范围:")
+settextsize("lbl11", 20)
+settextcolor("lbl11", cblack)
+
+addlabel("lblcmin", 3*w, 5*h, 1*w, h, "")
+settext("lblcmin", "5")
+settextsize("lblcmin", 20)
+settextcolor("lblcmin", cblue)
+
+addlabel("lblcmax", 5*w, 5*h, w, h, "")
+settext("lblcmax", "95")
+settextsize("lblcmax", 20)
+settextcolor("lblcmax", cblue)
+
+addlabel("lbla", 3*w, 1*h, 1*w, h, "")
+settext("lbla", "0")
+settextsize("lbla", 20)
+settextcolor("lbla", col)
+
+addlabel("lblb", 5*w, 1*h, 1*w, h, "")
+settext("lblb", "0")
+settextsize("lblb", 20)
+settextcolor("lblb", col)
+
+addlabel("lblc", 7*w, 1*h, 1*w, h, "")
+settext("lblc", "0")
+settextsize("lblc", 20)
+settextcolor("lblc", col)
+
+addlabel("lbl70", 1, 1*h, 3*w, h, "")
+settext("lbl70", "本次分数:")
+settextsize("lbl70", 20)
+settextcolor("lbl70", cblack)
+
+addlabel("lbla0", 3*w, 2*h, 1*w, h, "")
+settext("lbla0", "0")
+settextsize("lbla0", 20)
+settextcolor("lbla0", col)
+
+addlabel("lblb0", 5*w, 2*h, 1*w, h, "")
+settext("lblb0", "0")
+settextsize("lblb0", 20)
+settextcolor("lblb0", col)
+
+addlabel("lblc0", 7*w, 2*h, 1*w, h, "")
+settext("lblc0", "0")
+settextsize("lblc0", 20)
+settextcolor("lblc0", col)
+
+addlabel("lbl701", 1, 2*h, 3*w, h, "")
+settext("lbl701", "累计分数:")
+settextsize("lbl701", 20)
+settextcolor("lbl701", cblack)
+
+addlabel("lbl6", 4*w, 1*h, 1*w, h, "")
+settext("lbl6", ":")
+settextsize("lbl6", 20)
+settextcolor("lbl6", cblack)
+
+addlabel("lbl60", 6*w, 1*h, 1*w, h, "")
+settext("lbl60", ":")
+settextsize("lbl60", 20)
+settextcolor("lbl60", cblack)
+
+addlabel("lbl600", 4*w, 2*h, 1*w, h, "")
+settext("lbl600", ":")
+settextsize("lbl600", 20)
+settextcolor("lbl600", cblack)
+
+addlabel("lbl6000", 6*w, 2*h, 1*w, h, "")
+settext("lbl6000", ":")
+settextsize("lbl6000", 20)
+settextcolor("lbl6000", cblack)
+
+addlabel("lblmin", 3*w, 4*h, 1*w, h, "")
+settext("lblmin", "0")
+settextsize("lblmin", 20)
+settextcolor("lblmin", cblack)
+
+addlabel("lblmax", 5*w, 4*h, w, h, "")
+settext("lblmax", "100")
+settextsize("lblmax", 20)
+settextcolor("lblmax", cblack)
+
+addlabel("lbl5", 4*w, 4*h, w, h, "")
+settext("lbl5", "~")
+settextsize("lbl5", 20)
+settextcolor("lbl5", cblack)
+
+addlabel("lbl12", 4*w, 5*h, w, h, "")
+settext("lbl12", "~")
+settextsize("lbl12", 20)
+settextcolor("lbl12", cblack)
+
+AddEditText('edi1',3*w,6*h,3*w,h,'')
+
+addlabel("lbl6", 1, 6*h, 3*w, h, "")
+settext("lbl6", "在此输入>>>")
+settextsize("lbl6", 20)
+settextcolor("lbl6", cblack)
+
+AddButton('btn1',0,7*h,1.6*w,2*h,'')
+SetText('btn1','1')
+AddButton('btn2',1.6*w,7*h,1.6*w,2*h,'')
+SetText('btn2','2')
+AddButton('btn3',3.2*w,7*h,1.6*w,2*h,'')
+SetText('btn3','3')
+AddButton('btn4',4.8*w,7*h,1.6*w,2*h,'')
+SetText('btn4','4')
+AddButton('btn5',6.4*w,7*h,1.6*w,2*h,'')
+SetText('btn5','5')
+AddButton('btn6',0,9*h,1.6*w,2*h,'')
+SetText('btn6','6')
+AddButton('btn7',1.6*w,9*h,1.6*w,2*h,'')
+SetText('btn7','7')
+AddButton('btn8',3.2*w,9*h,1.6*w,2*h,'')
+SetText('btn8','8')
+AddButton('btn9',4.8*w,9*h,1.6*w,2*h,'')
+SetText('btn9','9')
+AddButton('btn0',6.4*w,9*h,1.6*w,2*h,'')
+SetText('btn0','0')
+
+AddButton('btny',0,11.1*h,4*w,1.8*h,'')
+SetText('btny','确认数字')
+AddButton('btnr',4*w,11.1*h,4*w,1.8*h,'')
+SetText('btnr','游戏规则')
+rem =====窗体end=====
+
+rem =====主过程start=====
+dim jf(12)
+filereadlist(filedirrootexternal & "/caishuzi", "cszdat.txt", "jf")
+settext("lbla0", jf(1))
+settext("lblb0", jf(5))
+settext("lblc0", jf(9))
+nowp=1
+player1=0
+player2=0
+player3=0
+cmin=5
+cmax=95
+settext("lbl3", "现在由Sam猜数。")
+rem 获取随机数列及更新随机数列
+inputbox("请输入一个数字(1~3)" & crlf & "每获取一次随机数列下一次它都会改变。", "获取随机数列",  "确定", "", "")
+x=getinput
+ dim numbers(7)
+if x = 1 then
+    filereadlist(filedirrootexternal & "/caishuzi", "csz1.txt", "rndx")
+   for y = 0 to 6
+       numbers(y)=rndx(y)+7
+       if numbers(y)>=100 then
+       numbers(y)=numbers(y)-100
+      end if
+       if numbers(y)=0  then 
+        numbers(y)=1
+      end if
+   next
+   filewritelist(filedirrootexternal & "/caishuzi", "csz1.txt", "numbers")
+elseif x = 2 then
+     filereadlist(filedirrootexternal & "/caishuzi", "csz2.txt", "rndx")
+    for y = 0 to 6
+         numbers(y)=rndx(y)+7
+         if numbers(y)>=100   then
+         numbers(y)=numbers(y)-100
+      end if
+       if numbers(y)=0 then 
+        numbers(y)=1
+      end if
+    next
+    filewritelist(filedirrootexternal & "/caishuzi", "csz2.txt", "numbers")
+elseif x = 3 then
+    filereadlist(filedirrootexternal & "/caishuzi", "csz3.txt", "rndx")
+for y = 0 to 6
+numbers(y)=rndx(y)+7
+       if numbers(y)>=100  then 
+       numbers(y)=numbers(y)-100
+      end if
+       if numbers(y)=0 then 
+       numbers(y)=1
+      end if
+next
+filewritelist(filedirrootexternal & "/caishuzi", "csz3.txt", "numbers")
+else
+filereadlist(filedirrootexternal & "/caishuzi", "csz4.txt", "rndx")
+for y = 0 to 6
+numbers(y)=rndx(y)+7
+       if numbers(y)>=100  then 
+       numbers(y)=numbers(y)-100
+      end if
+       if numbers(y)=0 then 
+        numbers(y)=1
+      end if
+next
+filewritelist(filedirrootexternal & "/caishuzi", "csz4.txt", "numbers")
+end if
+rem 随机数列获取及更新完毕
+
+x=rndx(0)
+ground=0
+minn=0
+maxn=100
+txt=""
+cmax=95
+cmin=5
+
+
+rem =====主过程end=====
+rem ====================
+REM =====过程=====
+
+Sub button_click(who)
+select who
+case "btn1"
+txt=txt & "1"
+case "btn2"
+txt=txt & "2"
+case "btn3"
+txt=txt & "3"
+case "btn4"
+txt=txt & "4"
+case "btn5"
+txt=txt & "5"
+case "btn6"
+txt=txt & "6"
+case "btn7"
+txt=txt & "7"
+case "btn8"
+txt=txt & "8"
+case "btn9"
+txt=txt & "9"
+case "btn0"
+txt=txt & "0"
+case "btny"
+
+guess=txt
+txt=""
+settext("edi1", txt)
+if guess>cmax or guess<cmin then
+showtoast("你猜的数在范围外！",false)
+elseif guess<x then
+showtoast("太小了",false)
+minn=guess
+if maxn-minn>50 then
+cmax=maxn-5
+cmin=minn+5
+elseif maxn-minn>20 then
+cmax=maxn-3
+cmin=minn+3
+else
+cmax=maxn-1
+cmin=minn+1
+end if
+settext("lblcmax", cmax)
+settext("lblcmin", cmin)
+settext("lblmin", minn)
+if nowp=1 then
+nowp=2
+settext("lbl3", "现在由天才教授2猜数。")
+settextcolor("lbl3", cred)
+elseif nowp=2 then
+nowp=3
+settext("lbl3", "现在由白展堂猜数。")
+settextcolor("lbl3", cgreen)
+else
+nowp=1
+settext("lbl3", "现在由Sam猜数。")
+settextcolor("lbl3", cblue)
+end If
+elseif guess>x then
+showtoast("太大了",false)
+maxn=guess
+if maxn-minn>50 then
+cmax=maxn-5
+cmin=minn+5
+elseif maxn-minn>20 then
+cmax=maxn-3
+cmin=minn+3
+else
+cmax=maxn-1
+cmin=minn+1
+end if
+settext("lblcmax", cmax)
+settext("lblcmin", cmin)
+settext("lblmax", maxn)
+if nowp=1 then
+nowp=2
+settext("lbl3", "现在由天才教授2猜数。")
+settextcolor("lbl3", cred)
+elseif nowp=2 then
+nowp=3
+settext("lbl3", "现在由白展堂猜数。")
+settextcolor("lbl3", cgreen)
+else
+nowp=1
+settext("lbl3", "现在由Sam猜数。")
+settextcolor("lbl3", cblue)
+end If
+elseif guess=x then
+showtoast("猜中了！",false)
+cmin=5
+cmax=95
+settext("lblcmax", cmax)
+settext("lblcmin", cmin)
+if nowp=1 then
+player2=player2+1
+player3=player3+1
+msgbox("Sam得0分，天才教授2和白展堂各加1分")
+jf(5)=jf(5)+1
+jf(9)=jf(9)+1
+nowp=2
+settext("lbl3", "现在由天才教授2猜数。")
+settextcolor("lbl3", cred)
+elseif nowp=2 then
+player1=player1+1
+player3=player3+1
+msgbox("天才教授2得0分，Sam和白展堂各加1分")
+jf(1)=jf(1)+1
+jf(9)=jf(9)+1
+nowp=3
+settext("lbl3", "现在由白展堂猜数。")
+settextcolor("lbl3", cgreen)
+else
+player2=player2+1
+player1=player1+1
+msgbox("白展堂得0分，Sam和天才教授2各加1分")
+jf(5)=jf(5)+1
+jf(1)=jf(1)+1
+nowp=1
+settext("lbl3", "现在由Sam猜数。")
+settextcolor("lbl3", cblue)
+end If
+settext("lblc", player3)
+settext("lblb", player2)
+settext("lbla", player1)
+settext("lbla0", jf(1))
+settext("lblb0", jf(5))
+settext("lblc0", jf(9))
+filewritelist(filedirrootexternal & "/caishuzi", "cszdat.txt", "jf")
+ground=ground+1
+if ground=7 then
+ground=0
+filereadlist(filedirrootexternal & "/caishuzi", "csz4.txt", "rndx")
+for y = 0 to 6
+numbers(y)=rndx(y)+7
+       if numbers(y)>=100  then 
+       numbers(y)=numbers(y)-100
+      end if
+       if numbers(y)=0 then 
+        numbers(y)=1
+      end if
+next
+filewritelist(filedirrootexternal & "/caishuzi", "csz4.txt", "numbers")
+end if
+x=rndx(ground)
+minn=0
+maxn=100
+settext("lblmax", "100")
+settext("lblmin", "0")
+end if
+
+case "btnr"
+msgbox("      三个人轮流猜系统给出的随机数，猜中了就输。" & crlf & "      输的得0分，其他两人得1分。" & crlf & "      当极差>50时，猜数范围缩小10;" & crlf & "      当极差>20且<=50时，猜数范围缩小6。" & crlf & "      玩家1:Sam" & crlf & "      玩家2:天才教授2" & crlf & "      玩家3:白展堂" ,"游戏规则")
+end select
+settext('edi1',txt)
+End Sub 
+
+Sub edit_change(who, old, new)
+ txt=new
+End Sub
+
+

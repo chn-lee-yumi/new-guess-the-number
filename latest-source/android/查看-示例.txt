@@ -1,0 +1,269 @@
+REM Specify the menus.
+rem 注释，添加菜单
+
+Dim menuitems(0)
+array(menuitems,"Zero","One","Two")
+for i = 0 to arraylen(menuitems()) - 1
+  addmenuitem(menuitems(i))
+next
+
+
+REM An array for general use
+rem 注释，一般用数组
+Dim data(0)
+
+REM Scale controls to screen size. The script assumes 320 x 480
+rem 注释，规模控制屏幕的大小。该脚本假定为320 x 480
+rem Note that fonts are scaled according to density by Android
+rem 注释，请注意，字体缩放，根据其密度由Android
+
+d = getlayoutvalues
+strsplit(data, d, ",")
+d = data(0)  / 320
+
+
+REM let the activity window paint empty to look like somethings happened immediately
+rem 注释，把活动窗口涂成空的，使其看上去就像是立即发生的事情
+rem otherwise you carry on seeing the IDE window
+rem 注释，否则，你看到IDE窗口进行
+
+calldoevents
+
+
+REM Add the views
+rem 注释，添加控件
+
+addbutton("btn1", 5*d, 5*d, 65*d, 65*d, "")
+settext("btn1", "Get")
+
+addtogglebutton("tgl1", 250*d, 5*d, 65*d, 65*d, "")
+settexton("tgl1", "Yes")
+settextoff("tgl1", "No")
+
+addlabel("lbl1", 80*d, 5*d, 130*d, 30*d, "")
+settext("lbl1", "<- press both ->")
+settextsize("lbl1", 18)
+
+addcheckbox("chk1", 5*d, 80*d, 170*d,40*d, "")
+settext("chk1", "Check(!) this out")
+
+addradiobutton("rad1", 180*d, 80*d, 65*d, 40*d, "")
+settext("rad1", "On")
+
+addradiobutton("rad2", 250*d, 80*d, 65*d, 40*d, "")
+settext("rad2", "Off")
+
+addedittext("edt1", 5*d, 135*d, 205*d, 55*d, "")
+settext("edt1", "Some text" & crlf & "some more" & crlf & "even more" & crlf & "and more")
+
+createtypeface("serif", 1)
+settypeface("edt1")
+settextsize("edt1", 24)
+
+addlabel("lbl2", 220*d, 135*d, 100*d, 30*d, "")
+settext("lbl2", "Scroll the text")
+
+addimage("img1", 5*d, 205*d, 305*d, 200*d, "")
+
+addpanel("pnl1", 5*d, 80*d, 305*d, 300*d, "")
+setcolor("pnl1", 10*d, csilver)
+addbutton("btn2", 5*d, 5*d, 65*d, 65*d, "pnl1")
+settext("btn2", "Hide")
+setvisible("pnl1", false)
+
+Dim data(3)
+data(0) = cred
+data(1) = cgreen
+data(2) = cblue
+setactivitybackground("TL_BR", 10*d, "data")
+setbackground("lbl1", "RIGHT_LEFT", 10*d, "data")
+settextcolor("lbl1", cyellow)
+
+
+REM TabHost
+
+addtabhost("tbh1", 75*d, 5*d, 200*d, 250*d, "pnl1")
+setcolor("tbh1", 5*d, cred)
+
+addtab("One", "tab1", "tbh1")
+setcolor("tab1", 10*d, cblack)
+addspinner("spin1", 10*d, 10*d, 150*d, 40*d, "tab1")
+setprompt("spin1", "A Spinner")
+array(data, "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+addall("spin1", "data")
+addlistview("lvw1", 10*d, 55*d, 150*d, 100*d, "tab1")
+setcolor("lvw1", 5*d, cblue)
+setscrollcolor("lvw1", cblue)
+addall("lvw1", "data")
+
+
+
+addtab("Two", "tab2", "tbh1")
+setcolor("tab2", 10*d, cgray)
+addseekbar("skb1", 10*d, 20*d, 150*d, 35*d, "tab2")
+addbutton("tbtn1", 50*d, 80*d, 65*d, 65*d, "tab2")
+settext("tbtn1", "Reset")
+setvalue("skb1", getmax("skb1")/2)
+
+addtab("Three", "tab3", "tbh1")
+setcolor("tab3", 10*d, cwhite)
+addscrollview("svw1", 10*d, 10*d, 160*d, 150*d, "tab3")
+setcolor("svw1", 10*d, cgreen)
+getpanel("svw1", "svpnl")
+setheight("svpnl", 300*d)
+addbutton("tbtn2", 40*d, 80*d, 85*d, 65*d, "svpnl")
+settext("tbtn2", "Bottom")
+addlabel("tlbl2", 50*d, 280*d, 1000*d, 30*d, "svpnl")
+settext("tlbl2", "ScrollView")
+
+
+
+REM Graphics 
+rem 注释，图像
+
+canvasinit("img1")
+drawcolor(cYellow)
+
+col = argb(128, 255, 0, 0)
+drawcircle(35*d, 35*d, 35*d, col, true, 2*d)
+
+col = argb(128, 0, 255, 0)
+drawline(35*d, 35*d, 35*d, 135*d, col, 4*d) 
+
+for i = 0 to 80*d
+	drawpoint(i, 100*d, cblue)
+next
+
+rem the points array can have a rank of 1 or 2
+rem 注释，点阵列可以有1或2级
+dim points(4,2)
+points(0,0) = 40*d
+points(0,1) = 40*d
+points(1,0) = 80*d
+points(1,1) = 80*d
+points(2,0) = 40*d
+points(2,1) = 160*d
+points(3,0) = 40*d
+points(3,1) = 40*d
+drawpath("points", cpurple, false, 3)
+
+rem the points array can have a rank of 1 or 2
+rem 注释，点阵列可以有1或2级
+dim rect(4)
+rect(0) = 135*d
+rect(1) = 15*d
+rect(2) = 200*d
+rect(3) = 135*d
+
+drawrect("rect", cbrown, false, 4*d)
+drawrectrotated("rect", cgold, false, 4*d, 45) 
+
+drawtext("Some text", 155*d, 100*d, 20, cblack, "RIGHT")
+drawtextrotated("Some text", 155*d, 100*d, 20, cblack, "RIGHT", 180)
+
+
+canvasinit("pnl1")
+drawtext("Some text", 155*d, 280*d, 20, cblack, "RIGHT")
+drawtextrotated("Some text", 155*d, 280*d, 20, cblack, "RIGHT", 180)
+
+
+REM File operations
+rem 注释，文件操作
+
+txt = filereadstring(filedirrootexternal & "/BasicIDE", "IdeTest.src")
+msgbox(txt, "My script!" & " " & getfirsttime)
+
+filewritelist(filedirrootexternal, "test.txt", "rect")
+txt = filereadstring(filedirrootexternal, "test.txt")
+msgbox(txt, "Test file")
+
+filereadlist(filedirrootexternal, "test.txt", "temp")
+msgbox(temp(0), "Test file")
+
+
+inputdate("Enter a date", "Date Dialog", now, "OK", "Cancel", "")
+showtoast("Date = " & Date(getinput), false)
+inputtime("Enter a time", "Time Dialog", now, true, "OK", "Cancel", "")
+showtoast("Time = " & Time(getinput), false)
+
+
+REM device layout values
+rem 注释，设备布局值
+
+w = windowwidth
+h = windowheight
+showtoast("Window size is " & w & " x " & h, false)
+showtoast("Layout values are " & getlayoutvalues, false)
+
+REM End of inital program block
+rem 注释，初始程序块结束
+
+
+REM Event Subs
+rem 注释，事件过程
+
+Sub button_click(who)
+	select who
+		case "btn1"
+			res = inputbox("Enter text", "InputBox", "OK", "Cancel", "")
+			ip = getinput
+			msgbox(ip, "You entered")
+			array(data, "Zero", "One", "Two", "Three", "Four", "Five")
+			res = inputlistbox("data", "Choose an item", 0)
+			if res < 0 then
+				res = "Nothing"
+			else
+				res = data(res)
+			end if
+			msgbox(res, "You chose") 
+			res = inputmultilistbox("data", "Choose one or more items")
+			msgbox(res, "You chose") 
+		case "btn2"
+				setvisible("pnl1", false)	
+				setchecked("tgl1", false)	
+		case "tbtn1"
+			a = getmax("skb1")
+			setvalue("skb1", a/2)
+		case "tbtn2"
+			fullscroll("svw1", true)
+	end select
+End Sub 
+
+Sub check_change(who, checked)
+  progressshow(who & " checked is " & checked)
+ for i = 0 to 2000
+	calldoevents
+  next
+  progresshide	
+End Sub 
+
+Sub edit_change(who, old, new)
+ showtoast(who & " " & asc(strat(new, strlength(new) - 1)), false)
+End Sub
+
+Sub listview_itemclick(who, pos, value)
+	showtoast(who & " " & value, false) 
+end sub
+
+Sub radio_change(who, checked)
+	showtoast(who & " " & checked, false) 
+End Sub 
+
+Sub seekbar_valuechanged(who, value, userchanged)
+End Sub
+
+Sub spinner_itemclick(who, pos, value)
+	showtoast(who & " " & value, false) 
+end sub
+
+Sub tabhost_tabchanged(who)
+End Sub 
+
+Sub toggle_change(who, checked)
+	setvisible("pnl1", checked)
+End Sub 
+
+Sub menu_click(which)
+	showtoast(which, false) 
+end sub
+	

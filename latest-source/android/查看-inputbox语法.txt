@@ -1,0 +1,3 @@
+inputbox("内容", "标题",  "按钮一名称", "按钮二名称", "按钮三名称")
+x=getinput
+msgbox(x)

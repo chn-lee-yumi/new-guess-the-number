@@ -1,0 +1,10 @@
+dim X
+X=0
+
+ccx(n)
+sub ccx(b)
+msgbox("sj")
+X=X+1
+end sub
+
+msgbox(X)
